@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Home - n0manarmy.github.io</title>
+        <title>Post 1 - n0manarmy.github.io</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="expanded "><a href="post_1.html"><strong aria-hidden="true">2.</strong> Post 1</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="expanded "><a href="post_1.html" class="active"><strong aria-hidden="true">2.</strong> Post 1</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,25 +148,130 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#about" id="about">About</a></h1>
-<p>Author: Penn Wilbert</p>
-<p>A general collection of code snippets as I work through Rust in my daily life. My intent is to memorialize bits of code that I'll potentially use later in life.</p>
-<h1><a class="header" href="#summary" id="summary">Summary</a></h1>
-<ul>
-<li><a href="./SUMMARY.html">Home</a></li>
-<li><a href="./post_1.html">Post 1</a></li>
-</ul>
+                        <h1><a class="header" href="#log4rs-building-at-runtime" id="log4rs-building-at-runtime">log4rs building at runtime</a></h1>
+<h2><a class="header" href="#code" id="code">Code</a></h2>
+<h2><a class="header" href="#build_loggerrs" id="build_loggerrs">build_logger.rs</a></h2>
+<pre><code>use log::{debug, error, info, warn, LevelFilter};
+use log4rs::append::console::ConsoleAppender;
+use log4rs::config::{Appender, Config, Logger, Root};
+use log4rs::Handle;
+
+use crate::args_helpers::argument_helper::LogLevel;
+
+pub struct LogBuilder {}
+
+impl LogBuilder {
+
+    /// Builds our logger based on a programmatic implementation. This reduces the required
+    /// config files needed to run the application.
+    pub fn build_logger(log_level: &amp;LogLevel) -&gt; Handle {
+        let stdout = ConsoleAppender::builder().build();
+        let appender = Appender::builder().build(&quot;stdout&quot;, Box::new(stdout));
+    
+        let mut logger = Logger::builder().build(&quot;app::backend::db&quot;, LevelFilter::Info);
+        let mut builder = Root::builder().appender(&quot;stdout&quot;).build(LevelFilter::Info);
+    
+        match log_level {
+            LogLevel::Debug =&gt; {
+                logger = Logger::builder().build(&quot;app::backend::db&quot;, LevelFilter::Debug);
+                builder = Root::builder().appender(&quot;stdout&quot;).build(LevelFilter::Debug);
+            }
+            LogLevel::Info =&gt; (),
+            LogLevel::Warn =&gt; {
+                logger = Logger::builder().build(&quot;app::backend::db&quot;, LevelFilter::Warn);
+                builder = Root::builder().appender(&quot;stdout&quot;).build(LevelFilter::Warn);
+                
+            }
+            LogLevel::Error =&gt; {
+                logger = Logger::builder().build(&quot;app::backend::db&quot;, LevelFilter::Error);
+                builder = Root::builder().appender(&quot;stdout&quot;).build(LevelFilter::Error);
+            }
+        }
+        let config = Config::builder().appender(appender).logger(logger).build(builder).unwrap();
+    
+        log4rs::init_config(config).unwrap()
+    }
+}
+</code></pre>
+<h2><a class="header" href="#args_helperrs" id="args_helperrs">args_helper.rs</a></h2>
+<pre><code>#[derive(Debug)]
+pub enum LogLevel {
+    Debug,
+    Info,
+    Warn,
+    Error,
+}
+
+#[derive(Debug)]
+pub struct ArgumentHelper {
+    pub log_level: LogLevel,
+}
+
+impl ArgumentHelper {
+
+        pub fn parse_args(mut self, args: Vec&lt;String&gt;) -&gt; ArgumentHelper {
+        for _x in 0..args.len() {
+            match args[_x].as_ref() {
+                _ if args[_x] == Self::HELP_SWITCHES[0] =&gt; {
+                    self.help = true;
+                }
+                _ if args[_x] == Self::HELP_SWITCHES[1] =&gt; {
+                    self.help = true;
+                }
+                Self::LOG_LEVEL_SWITCH =&gt; {
+                    self.log_level = Self::parse_log_level(&amp;args[_x + 1]);
+                }
+                &amp;_ =&gt; {}
+            }
+        }
+        self
+    }
+
+    fn parse_log_level(val: &amp;str) -&gt; LogLevel {
+        match val {
+            &quot;debug&quot; =&gt; LogLevel::Debug,
+            &quot;info&quot; =&gt; LogLevel::Info,
+            &quot;warn&quot; =&gt; LogLevel::Warn,
+            &quot;error&quot; =&gt; LogLevel::Error,
+            _ =&gt; LogLevel::Info,
+        }
+    }
+}
+</code></pre>
+<h2><a class="header" href="#mainrs" id="mainrs">main.rs</a></h2>
+<pre><code>fn main() {
+    // Collects arguments from system at runtime and parses to vector
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    // validate that values were provided, otherwise print help and exit
+    if args.len() &lt;= 1 {
+        debug!(&quot;No command line args, supplied, printing help&quot;);
+        Help::print_help();
+        exit(1);
+    }
+
+    // parse arguments from runtime into argument helper object
+    let argument_helper: ArgumentHelper = ArgumentHelper::new().parse_args(args);
+    if argument_helper.help {
+        Help::print_help();
+        exit(1);
+    }
+    LogBuilder::build_logger(&amp;argument_helper.log_level);
+    info!(&quot;Logger started&quot;);
+
+}
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="post_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="SUMMARY.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -176,11 +281,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a href="post_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a href="SUMMARY.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
