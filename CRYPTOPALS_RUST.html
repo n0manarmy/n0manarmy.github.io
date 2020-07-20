@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Home - n0manarmy.github.io</title>
+        <title>Cryptopals Rust Implementaitons - n0manarmy.github.io</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="expanded "><a href="CRYPTOPALS_RUST.html" class="active"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,25 +149,69 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#about" id="about">About</a></h1>
-<p>Author: Penn Wilbert</p>
-<p>A general collection of code snippets as I work through Rust in my daily life. My intent is to memorialize bits of code that I'll potentially use later in life.</p>
-<h1><a class="header" href="#summary" id="summary">Summary</a></h1>
-<ul>
-<li><a href="./SUMMARY.html">Home</a></li>
-<li><a href="./LOG4RS_RUNTIME_LOGGER.html">compiling log4rs runtime logger</a></li>
-<li><a href="./CRYPTOPALS_RUST.html">Cryptopals Rust Implementaitons</a></li>
-</ul>
+<p>Work has given us opertunties to explore and learn new things during the COVID19 crisis. I've been exploring the Rust programming language for a while and had decided to make it my primary language of choice. I've worked in Python, Java, shell scripting for other projects, each one helped me better appreciate Rust after I dedicated myself to learning the language.</p>
+<p>I'm going to offer some advice, tips, and spoilers about the cryptopals challenges that I've worked through. I'm going to use this as a journal of sorts for my efforts. My original approach to these challenges was to start writing a bunch of helper functions for conversions. Set 1 Challenge 1 lead me down this path and I assumed it was the most appropriate for Cryptopals, and Rust. In a sense it was as was not.</p>
+<h2><a class="header" href="#set-1" id="set-1">Set 1</a></h2>
+<h3><a class="header" href="#challenge-1" id="challenge-1">Challenge 1</a></h3>
+<p>Challenge 1 asks to take a hex encoded string and convert it to a base64 encoded string. I had written something similar a long time ago in C as a fun little challege. It was much easier in C because I just assumed bit shifting, where as in Rust, I knew there are crates to help. I did not want use crates so I started writing up helper functions for various different encoding/decoding.</p>
+<pre><code>Chapter 1 Challenge 
 
+Convert hex to base64
+The string
+49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6
+
+Should produce:
+SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29
+
+So go ahead and make that happen. You'll need to use this code for the rest of the exercises
+
+Cryptopals Rule
+Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.
+</code></pre>
+<p>Within the spoiler is the code I wrote to encode the hex string to base64</p>
+<details>
+    <summary>Spoiler</summary>
+<pre><code>```
+pub fn encode_hex_str(buf: &amp;'static str) -&gt; String {
+    let mut buf_size = 0;
+    let mut byte_buf: u32 = 0;
+    let mut encoded: String = String::new();
+
+    for c in buf.chars() {
+        buf_size += 1;
+        byte_buf |= c.to_digit(16).unwrap();
+
+        if buf_size == 6 {
+            let encoding = encode_match(byte_buf, buf_size/2);
+            encoded.push_str(&amp;encoding);
+            byte_buf = 0;
+            buf_size = 0;
+            continue
+        }
+
+        byte_buf &lt;&lt;= 4;
+    }
+
+    if buf_size != 0 {
+        let encoding = encode_match(byte_buf, buf_size/2);
+        encoded.push_str(&amp;encoding);
+    }
+
+    encoded
+}
+```
+</code></pre>
+</details>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="LOG4RS_RUNTIME_LOGGER.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="LOG4RS_RUNTIME_LOGGER.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -177,11 +221,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a href="LOG4RS_RUNTIME_LOGGER.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a href="LOG4RS_RUNTIME_LOGGER.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
