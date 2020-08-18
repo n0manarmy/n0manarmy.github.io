@@ -7,13 +7,24 @@
         
         <meta name="robots" content="noindex" />
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
@@ -21,8 +32,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -38,7 +50,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -82,8 +94,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -92,37 +104,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">n0manarmy.github.io</h1>
+                    <h1 class="menu-title">n0manarmy.github.io</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -157,12 +168,20 @@
 <ul>
 <li><a href="./SUMMARY.html">Home</a></li>
 <li><a href="./LOG4RS_RUNTIME_LOGGER.html">compiling log4rs runtime logger</a></li>
-<li><a href="./CRYPTOPALS_RUST.html">Cryptopals Rust Implementaitons</a></li>
+<li><a href="./CRYPTOPALS_RUST.html">Cryptopals Rust Implementaitons</a>
+<ul>
+<li><a href="./SET1_CH1.html">Set 1 Challenge 1</a></li>
+<li><a href="./SET1_CH2.html">Set 1 Challenge 2</a></li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#log4rs-building-at-runtime" id="log4rs-building-at-runtime">log4rs building at runtime</a></h1>
 <h2><a class="header" href="#code" id="code">Code</a></h2>
 <h2><a class="header" href="#build_loggerrs" id="build_loggerrs">build_logger.rs</a></h2>
-<pre><code>use log::{debug, error, info, warn, LevelFilter};
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use log::{debug, error, info, warn, LevelFilter};
 use log4rs::append::console::ConsoleAppender;
 use log4rs::config::{Appender, Config, Logger, Root};
 use log4rs::Handle;
@@ -203,9 +222,13 @@ impl LogBuilder {
         log4rs::init_config(config).unwrap()
     }
 }
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#args_helperrs" id="args_helperrs">args_helper.rs</a></h2>
-<pre><code>#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
 pub enum LogLevel {
     Debug,
     Info,
@@ -248,9 +271,10 @@ impl ArgumentHelper {
         }
     }
 }
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <h2><a class="header" href="#mainrs" id="mainrs">main.rs</a></h2>
-<pre><code>fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     // Collects arguments from system at runtime and parses to vector
     let args: Vec&lt;String&gt; = env::args().collect();
 
@@ -271,7 +295,7 @@ impl ArgumentHelper {
     info!(&quot;Logger started&quot;);
 
 }
-</code></pre>
+</code></pre></pre>
 <h1><a class="header" href="#about-1" id="about-1">About</a></h1>
 <p>Work has given us opertunties to explore and learn new things during the COVID19 crisis. I've been exploring the Rust programming language for a while and had decided to make it my primary language of choice. I've worked in Python, Java, shell scripting for other projects, each one helped me better appreciate Rust after I dedicated myself to learning the language.</p>
 <p>I'm going to offer some advice, tips, and spoilers about the cryptopals challenges that I've worked through. I'm going to use this as a journal of sorts for my efforts. My original approach to these challenges was to start writing a bunch of helper functions for conversions. Set 1 Challenge 1 lead me down this path and I assumed it was the most appropriate for Cryptopals, and Rust. In a sense it was as was not.</p>
@@ -279,7 +303,137 @@ impl ArgumentHelper {
 <li><a href="./SET1_CH1.html">Set 1 Challenge 1</a></li>
 <li><a href="./SET1_CH2.html">Set 1 Challenge 2</a></li>
 </ul>
+<h1><a class="header" href="#set-1-challenge-1" id="set-1-challenge-1">Set 1 Challenge 1</a></h1>
+<p>Challenge 1 asks to take a hex encoded string and convert it to a base64 encoded string. I had written something similar a long time ago in C as a fun little challege. It was much easier in C because I just assumed bit shifting, where as in Rust, I knew there are crates to help. I did not want use crates so I started writing up helper functions for various different encoding/decoding.</p>
+<pre><code>Chapter 1 Challenge 
 
+Convert hex to base64
+The string
+49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6
+
+Should produce:
+SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29
+
+So go ahead and make that happen. You'll need to use this code for the rest of the exercises
+
+Cryptopals Rule
+Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.
+</code></pre>
+<p>Within the spoiler is the code I wrote to encode the hex string to base64</p>
+<details>
+    <summary>Spoiler</summary>
+<pre><code>```rust
+pub fn encode_hex_str(buf: &amp;'static str) -&gt; String {
+    let mut buf_size = 0;
+    let mut byte_buf: u32 = 0;
+    let mut encoded: String = String::new();
+
+    for c in buf.chars() {
+        buf_size += 1;
+        byte_buf |= c.to_digit(16).unwrap();
+
+        if buf_size == 6 {
+            let encoding = encode_match(byte_buf, buf_size/2);
+            encoded.push_str(&amp;encoding);
+            byte_buf = 0;
+            buf_size = 0;
+            continue
+        }
+
+        byte_buf &lt;&lt;= 4;
+    }
+
+    if buf_size != 0 {
+        let encoding = encode_match(byte_buf, buf_size/2);
+        encoded.push_str(&amp;encoding);
+    }
+
+    encoded
+}
+```
+</code></pre>
+</details><h1><a class="header" href="#set-1-challenge-2" id="set-1-challenge-2">Set 1 Challenge 2</a></h1>
+<p>I approached this challenge with a little too much effort. I created functions to match and tear apart two Vectors of u8 and then xor their values. After working through the rest of the challenges and digging into rusts interator helpers, I realized there's a much more efficient way to handle this challenge.</p>
+<p>I've posted my original source and functions and then I'll post the alternative code.</p>
+<details>
+    <summary>Code Spoiler</summary>
+<pre><code>```rust
+pub fn main() {
+    println!(
+        &quot;
+        Chapter 1 Challenge 2
+        
+        Fixed XOR
+
+        Write a function that takes two equal-length buffers and produces their XOR combination.
+
+        If your function works properly, then when you feed it the string:
+
+        1c0111001f010100061a024b53535009181c
+
+        ... after hex decoding, and when XOR'd against:
+
+        686974207468652062756c6c277320657965
+
+        ... should produce:
+
+        746865206b696420646f6e277420706c6179
+
+        &quot;);
+    let a_val = &quot;1c0111001f010100061a024b53535009181c&quot;;
+    let b_val = &quot;686974207468652062756c6c277320657965&quot;;
+    let a_bytes: Vec&lt;u32&gt; = a_val.chars().map(|x| x.to_digit(16).unwrap()).collect();
+    let b_bytes: Vec&lt;u32&gt; = b_val.chars().map(|x| x.to_digit(16).unwrap()).collect();
+
+    // let a_bytes: Vec&lt;u32&gt; = encoders::hex_str_to_hex_val(a_val);
+    // let b_bytes: Vec&lt;u32&gt; = encoders::hex_str_to_hex_val(b_val);
+
+    let result = xor::helpers::xor_same_size_buffers(a_bytes, b_bytes);
+    let result_str: String = result.iter().map(|x| translators::to_hex(&amp;x)).collect();
+    
+    dbg!(assert_eq!(result_str, &quot;746865206b696420646f6e277420706c6179&quot;));
+    assert_eq!(result_str, &quot;746865206b696420646f6e277420706c6179&quot;);
+}
+
+pub fn xor_same_size_buffers(buf1: Vec&lt;u32&gt;, buf2: Vec&lt;u32&gt;) -&gt; Vec&lt;u32&gt; {
+    let mut xor_results: Vec&lt;u32&gt; = Vec::new();
+    let mut pos = 0;
+    if buf1.len() != buf2.len() {
+        panic!(&quot;buffers are not equal length&quot;);
+    };
+
+    while pos &lt; buf1.len() {
+        xor_results.push(buf1[pos] ^ buf2[pos]);
+        pos += 1;
+    }
+
+    xor_results
+}
+
+pub fn to_hex(v: &amp;u32) -&gt; char {
+    match v {
+        0 =&gt; '0',
+        1 =&gt; '1',
+        2 =&gt; '2',
+        3 =&gt; '3',
+        4 =&gt; '4',
+        5 =&gt; '5',
+        6 =&gt; '6',
+        7 =&gt; '7',
+        8 =&gt; '8',
+        9 =&gt; '9',
+        10 =&gt; 'a',
+        11 =&gt; 'b',
+        12 =&gt; 'c',
+        13 =&gt; 'd',
+        14 =&gt; 'e',
+        15 =&gt; 'f',
+        _ =&gt; panic!(&quot;unknown value in to_hex conversion&quot;),
+    }
+}
+```
+</code></pre>
+</details>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -302,14 +456,29 @@ impl ArgumentHelper {
         </div>
 
         
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
 
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 
