@@ -434,6 +434,23 @@ pub fn to_hex(v: &amp;u32) -&gt; char {
 ```
 </code></pre>
 </details>
+<p>We can opt to use the function to check that the Vectors we want to xor are the same size, alternatively we can use the iter zip function too.</p>
+<p>https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.zip</p>
+<p>instead of calling the line </p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let result = xor::helpers::xor_same_size_buffers(a_bytes, b_bytes);
+<span class="boring">}
+</span></code></pre></pre>
+<p>We'll instead call </p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let result = a.bytes.iter.zip(b_bytes.iter()).collect();
+<span class="boring">}
+</span></code></pre></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -455,21 +472,6 @@ pub fn to_hex(v: &amp;u32) -&gt; char {
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
