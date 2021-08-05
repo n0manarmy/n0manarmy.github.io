@@ -451,6 +451,7 @@ pub fn to_hex(v: &amp;u32) -&gt; char {
 </span>let result = a.bytes.iter.zip(b_bytes.iter()).collect();
 <span class="boring">}
 </span></code></pre></pre>
+<p>Date: 08.05.2021</p>
 <p>It was challenging getting an Electron app to interface with my Rust WASM library. One of the reasons I appreciate the Rust language is the consistency between releases, packages, and interoperability of the various libraries. I did not find this to be the case with JavaScript. JavaScript still feels very wild west, playing loose and free which is scary from a security mindset.</p>
 <p>In the end I got my applet to run within my Electron app by building it as a nodejs target.</p>
 <pre><code>wasm-pack build --target nodejs
@@ -481,21 +482,6 @@ console.log(greeter());
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
