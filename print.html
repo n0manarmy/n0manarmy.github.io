@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li><li class="chapter-item expanded "><a href="RUST_WASM.html"><strong aria-hidden="true">4.</strong> Electron, Rust, WASM, Oh MY!</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -174,6 +174,7 @@
 <li><a href="./SET1_CH2.html">Set 1 Challenge 2</a></li>
 </ul>
 </li>
+<li><a href="./RUST_WASM.html">Electron, Rust, WASM, Oh MY!</a></li>
 </ul>
 <h1><a class="header" href="#log4rs-building-at-runtime" id="log4rs-building-at-runtime">log4rs building at runtime</a></h1>
 <h2><a class="header" href="#code" id="code">Code</a></h2>
@@ -450,6 +451,14 @@ pub fn to_hex(v: &amp;u32) -&gt; char {
 </span>let result = a.bytes.iter.zip(b_bytes.iter()).collect();
 <span class="boring">}
 </span></code></pre></pre>
+<p>It was challenging getting an Electron app to interface with my Rust WASM library. One of the reasons I appreciate the Rust language is the consistency between releases, packages, and interoperability of the various libraries. I did not find this to be the case with JavaScript. JavaScript still feels very wild west, playing loose and free which is scary from a security mindset.</p>
+<p>In the end I got my applet to run within my Electron app by building it as a nodejs target.</p>
+<pre><code>wasm-pack build --target nodejs
+</code></pre>
+<p>After this, I was able to simply import it within the renderer.js in Electron like so</p>
+<pre><code>var greeter = require(path.resolve(__dirname, '../wasm-time-tracker/pkg/wasm_time_tracker')).greet;
+console.log(greeter());
+</code></pre>
 
                     </main>
 
@@ -472,6 +481,21 @@ pub fn to_hex(v: &amp;u32) -&gt; char {
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         

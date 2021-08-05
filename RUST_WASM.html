@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Set 1 Challenge 1 - n0manarmy.github.io</title>
+        <title>Electron, Rust, WASM, Oh MY! - n0manarmy.github.io</title>
         
         
 
@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html" class="active"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li><li class="chapter-item expanded "><a href="RUST_WASM.html"><strong aria-hidden="true">4.</strong> Electron, Rust, WASM, Oh MY!</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li><li class="chapter-item expanded "><a href="RUST_WASM.html" class="active"><strong aria-hidden="true">4.</strong> Electron, Rust, WASM, Oh MY!</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -159,70 +159,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#set-1-challenge-1" id="set-1-challenge-1">Set 1 Challenge 1</a></h1>
-<p>Challenge 1 asks to take a hex encoded string and convert it to a base64 encoded string. I had written something similar a long time ago in C as a fun little challege. It was much easier in C because I just assumed bit shifting, where as in Rust, I knew there are crates to help. I did not want use crates so I started writing up helper functions for various different encoding/decoding.</p>
-<pre><code>Chapter 1 Challenge 
-
-Convert hex to base64
-The string
-49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6
-
-Should produce:
-SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29
-
-So go ahead and make that happen. You'll need to use this code for the rest of the exercises
-
-Cryptopals Rule
-Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.
+                        <p>It was challenging getting an Electron app to interface with my Rust WASM library. One of the reasons I appreciate the Rust language is the consistency between releases, packages, and interoperability of the various libraries. I did not find this to be the case with JavaScript. JavaScript still feels very wild west, playing loose and free which is scary from a security mindset.</p>
+<p>In the end I got my applet to run within my Electron app by building it as a nodejs target.</p>
+<pre><code>wasm-pack build --target nodejs
 </code></pre>
-<p>Within the spoiler is the code I wrote to encode the hex string to base64</p>
-<details>
-    <summary>Spoiler</summary>
-<pre><code>```rust
-pub fn encode_hex_str(buf: &amp;'static str) -&gt; String {
-    let mut buf_size = 0;
-    let mut byte_buf: u32 = 0;
-    let mut encoded: String = String::new();
-
-    for c in buf.chars() {
-        buf_size += 1;
-        byte_buf |= c.to_digit(16).unwrap();
-
-        if buf_size == 6 {
-            let encoding = encode_match(byte_buf, buf_size/2);
-            encoded.push_str(&amp;encoding);
-            byte_buf = 0;
-            buf_size = 0;
-            continue
-        }
-
-        byte_buf &lt;&lt;= 4;
-    }
-
-    if buf_size != 0 {
-        let encoding = encode_match(byte_buf, buf_size/2);
-        encoded.push_str(&amp;encoding);
-    }
-
-    encoded
-}
-```
+<p>After this, I was able to simply import it within the renderer.js in Electron like so</p>
+<pre><code>var greeter = require(path.resolve(__dirname, '../wasm-time-tracker/pkg/wasm_time_tracker')).greet;
+console.log(greeter());
 </code></pre>
-</details>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="CRYPTOPALS_RUST.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="SET1_CH2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="SET1_CH2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -232,15 +187,11 @@ pub fn encode_hex_str(buf: &amp;'static str) -&gt; String {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="CRYPTOPALS_RUST.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="SET1_CH2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="SET1_CH2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

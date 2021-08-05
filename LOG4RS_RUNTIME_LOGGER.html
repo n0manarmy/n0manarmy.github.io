@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html" class="active"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Summary</li><li class="chapter-item expanded "><a href="SUMMARY.html"><strong aria-hidden="true">1.</strong> Home</a></li><li class="chapter-item expanded "><a href="LOG4RS_RUNTIME_LOGGER.html" class="active"><strong aria-hidden="true">2.</strong> compiling log4rs runtime logger</a></li><li class="chapter-item expanded "><a href="CRYPTOPALS_RUST.html"><strong aria-hidden="true">3.</strong> Cryptopals Rust Implementaitons</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="SET1_CH1.html"><strong aria-hidden="true">3.1.</strong> Set 1 Challenge 1</a></li><li class="chapter-item expanded "><a href="SET1_CH2.html"><strong aria-hidden="true">3.2.</strong> Set 1 Challenge 2</a></li></ol></li><li class="chapter-item expanded "><a href="RUST_WASM.html"><strong aria-hidden="true">4.</strong> Electron, Rust, WASM, Oh MY!</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -318,6 +318,21 @@ impl ArgumentHelper {
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         
